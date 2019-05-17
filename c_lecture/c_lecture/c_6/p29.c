@@ -13,4 +13,5 @@ int main() {
 			printf("%d ", arr[i][j]);
 
 	return 0;
+
 }
