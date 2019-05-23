@@ -8,43 +8,57 @@
 //Logger.log("확인할 var");
 //var sheet = SpreadsheetApp.getActiveSheet().setName('Settings');
 
-
-function run() { //main 함수 역할.
-  var sheet = SpreadsheetApp.getActiveSheet();
-
-  //1-1. 사용자가 I4에 입력을 하면
-  //todo 입력감지
+function onEdit(e) { //The onEdit(e) trigger runs automatically when a user changes the value of any cell in a spreadsheet.
+  var range=e.range;
+  var ui = SpreadsheetApp.getUi();
   
-  //1-2. 사용자가 K4에 입력을 하면
-  //todo 입력감지
+  //G4 위치에 값 변화가 생기면(엔터를 쳐야 함)
+  if(range.getColumn()==7 && range.getRow()==4) {
+    run("수업");
+  }
   
-  //2. 버튼을 보내고 YES 클릭시 입력한 내용 추가
-  /* var response=ui.alert('입력하신 내용을 적용하시겠습니까?', ui.ButtonSet.YES_NO);
+  //J4 위치에 값 변화가 생기면
+  if(range.getColumn()==10 && range.getRow()==4) {
+    run("상담");
+  }
+}
+
+function run(location) {
+  var ui = SpreadsheetApp.getUi();
+  var response=ui.alert("입력이 감지되었습니다.\n적용하시겠습니까?", ui.ButtonSet.YES_NO);
+  
   if(response==ui.Button.YES){
-  } */  
+    if(location == "수업") {
+      studentContentsInsert();
+    }
+    else if (location == "상담") {
+      counselContentsInsert();
+    }
+    //ui.alert("잠시 후 적용됩니다");
+  }
   
 }
 
-function classContentsInsert() {
+function studentContentsInsert() {
   var sheet = SpreadsheetApp.getActiveSheet();
   
   var last_row = sheet.getLastRow();
-  var data_range = sheet.getRange(4, 2, last_row, 8).moveTo(sheet.getRange("B5"));
+  var data_range = sheet.getRange(4, 2, last_row, 8).moveTo(sheet.getRange("B5")); //내용 옮기기
   
   var data_new_range = sheet.getRange("B5:I5").setBackground(null); //새로 내용이 채워진 곳 색 제거
-  data_range = sheet.getRange("B4:I4").setBackground("#fdedff"); //색 채움
-  
+  data_new_range = sheet.getRange("B4:I4").setBackground("#fdedff"); //색 채움
+  data_new_range.setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP); //텍스트 줄바꿈
 }
 
 function counselContentsInsert() {
-  var sheet = SpreadsheetApp.getActiveSheet();
+  var sheet = SpreadsheetApp.getActiveSheet()
   
   var last_row = sheet.getLastRow();
-  var data_range = sheet.getRange(4, 10, last_row, 2).moveTo(sheet.getRange("J5"));
+  var data_range = sheet.getRange(4, 10, last_row, 2).moveTo(sheet.getRange("J5")); //내용 옮기기
   
   var con_new_range = sheet.getRange("J5:K5").setBackground(null); //새로 내용이 채워진 곳 색 제거
-  con_range = sheet.getRange("J4:K4").setBackground("#fdedff"); //색 채움
- 
+  con_new_range = sheet.getRange("J4:K4").setBackground("#fdedff"); //색 채움
+  con_new_range.setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP); //텍스트 줄바꿈
 }
 
 
