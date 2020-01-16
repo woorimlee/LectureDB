@@ -1,0 +1,10 @@
+{
+	“ID” : “JCWarrior”,
+	“LV” : “5”,
+	“COIN” : 10000,
+	“ITEM” : {
+		“WEAPON” : “Excalibur1”,
+		“SHIELD” : null,
+		“POTION” : 5
+	}
+}
